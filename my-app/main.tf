@@ -6,7 +6,7 @@ data "google_compute_zones" "available" {
 resource "google_compute_instance" "my_app_instance" {
   project      = var.project_id
   name         = "virtual-machine-from-terraform"
-  machine_type = "f1-micro"
+  machine_type = "e2-standard-2"
   zone         = data.google_compute_zones.available.names[0]
 
   boot_disk {
@@ -18,6 +18,8 @@ resource "google_compute_instance" "my_app_instance" {
   network_interface {
     subnetwork = var.network_subnet_name
     subnetwork_project = var.project_id
+    nic_type = "VIRTIO_NET"
+
 
     access_config {
       // Include this section to give the VM an external ip address
